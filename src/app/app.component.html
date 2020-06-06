@@ -3,27 +3,35 @@
 
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
   <title>Shopping List</title>
 </head>
 
 <body>
-  <div id="wrapper">
-    <div id="shopping-list">
-      <div id="list">
-        <h1>My shopping list</h1>
-        <ul>
-          <li *ngFor="let shopping of shoppingItems$ | async" (click)="removeItem(shopping.id)">
-            {{shopping.name}}
-          </li>
-        </ul>
+<div id="wrapper">
+  <div id="shopping-list">
+    <div id="list">
+      <h1>My shopping list</h1>
+      <ul>
+        <li (click)="removeItem(shopping.id)" *ngFor="let shopping of shoppingItems$ | async">
+          {{shopping.name}}
+        </li>
+      </ul>
 
-        <input [(ngModel)]="text" />
-        <button (click)="addItem()">Add</button>
 
-      </div>
+      <form (ngSubmit)="addItem()">
+        <input
+            name="itemName"
+            placeholder="Item name"
+            type="text"
+            [(ngModel)]="itemName"/>
+        <button type="submit">+</button>
+
+      </form>
+
     </div>
   </div>
+</div>
 
 </body>
 
