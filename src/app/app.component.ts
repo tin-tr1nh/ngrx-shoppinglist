@@ -3,7 +3,7 @@ import {Store} from '@ngrx/store';
 import {AppState} from './store/models/app-state.model';
 import {Observable} from 'rxjs';
 import {ShoppingItem} from './store/models/shopping-item.model';
-import {AddItemAction, RemoveItemAction,} from './store/actions/shopping.action';
+import {AddItemAction, DeleteItemAction, LoadShoppingAction} from './store/actions/shopping.action';
 import {v4 as uuidv4} from 'uuid';
 
 @Component({
@@ -13,6 +13,9 @@ import {v4 as uuidv4} from 'uuid';
 })
 export class AppComponent implements OnInit {
   shoppingItems$: Observable<Array<ShoppingItem>>;
+  loading$: Observable<boolean>;
+  error$: Observable<Error>;
+
   title = 'ngrx-demo-shoppinglist';
   itemName: string;
 
@@ -20,7 +23,10 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.shoppingItems$ = this.store.select((store) => store.shoppingList);
+    this.store.dispatch(new LoadShoppingAction());
+    this.shoppingItems$ = this.store.select((store) => store.shoppingListState.list);
+    this.loading$ = this.store.select(store => store.shoppingListState.loading);
+    this.error$ = this.store.select(store => store.shoppingListState.error);
   }
 
   addItem() {
@@ -34,6 +40,6 @@ export class AppComponent implements OnInit {
   }
 
   removeItem(id: string) {
-    this.store.dispatch(new RemoveItemAction(id));
+    this.store.dispatch(new DeleteItemAction(id));
   }
 }

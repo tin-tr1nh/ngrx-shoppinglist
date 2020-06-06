@@ -13,7 +13,7 @@ const initialState: ShoppingListState = {
   error: null
 };
 
-export function ShoppingReducer(state: ShoppingListState = initialState, action: ShoppingAction) {
+export function ShoppingListStateReducer(state: ShoppingListState = initialState, action: ShoppingAction) {
   switch (action.type) {
     case ShoppingActionTypes.LOAD_SHOPPING:
       return {

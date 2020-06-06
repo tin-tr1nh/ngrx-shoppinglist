@@ -7,25 +7,31 @@ import {delay} from 'rxjs/operators';
   providedIn: 'root'
 })
 export class ShoppingService {
-  SHOPPING_URL = 'http://locahost:3000';
+  SHOPPING_URL = 'http://localhost:3000';
 
   constructor(private http: HttpClient) {
   }
 
+  getShoppingItems() {
+    return this.http.get<ShoppingItem[]>(this.SHOPPING_URL + '/shopping').pipe(
+        delay(300)
+    );
+  }
+
   getShoppingItem(id: string) {
-    return this.http.get(this.SHOPPING_URL + `/shopping/${id}`).pipe(
+    return this.http.get<ShoppingItem>(this.SHOPPING_URL + `/shopping/${id}`).pipe(
         delay(300)
     );
   }
 
   addShoppingItem(item: ShoppingItem) {
-    this.http.post(`${this.SHOPPING_URL}/shopping`, item).pipe(
+    return this.http.post(`${this.SHOPPING_URL}/shopping`, item).pipe(
         delay(300)
     );
   }
 
   deleteShoppingItem(id: string) {
-    this.http.delete(`${this.SHOPPING_URL}/shopping/${id}`).pipe(
+    return this.http.delete(`${this.SHOPPING_URL}/shopping/${id}`).pipe(
         delay(300)
     );
   }

@@ -9,7 +9,8 @@
 
 <body>
 <div id="wrapper">
-  <div id="shopping-list">
+  <div *ngIf="!(error$ | async); else error" [class.loading]="(loading$ | async)"
+       id="shopping-list">
     <div id="list">
       <h1>My shopping list</h1>
       <ul>
@@ -21,10 +22,10 @@
 
       <form (ngSubmit)="addItem()">
         <input
+            [(ngModel)]="itemName"
             name="itemName"
             placeholder="Item name"
-            type="text"
-            [(ngModel)]="itemName"/>
+            type="text"/>
         <button type="submit">+</button>
 
       </form>
@@ -34,5 +35,7 @@
 </div>
 
 </body>
-
+<ng-template #error>
+  <h2>{{(error$ | async)?.message}}</h2>
+</ng-template>
 </html>

@@ -1,6 +1,6 @@
-import {ShoppingItem} from './shopping-item.model';
+import {ShoppingListState} from '../reducers/shoppingListStateReducer';
 
 // Where we keep all the State
 export interface AppState {
-  readonly shoppingList: Array<ShoppingItem>;
+  readonly shoppingListState: ShoppingListState;
 }
